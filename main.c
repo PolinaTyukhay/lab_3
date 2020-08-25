@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <malloc.h>
 #include <locale.h>
 #include <time.h>
 #define LONG 256
@@ -250,7 +249,7 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 	printf("%s\n", alf);
-	srand(time(NULL));
+	srand(time(NULL));//устанавливаю от времени 
 	int number = 0;
 	number= rand() % (max - min + 1) + min;
 	printf("%d\n", number);
