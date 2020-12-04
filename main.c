@@ -9,66 +9,23 @@
 int main(int argc, char** argv) {
 	setlocale(LC_ALL, "Rus");
 	printf("%d\n", argc);
-	//int rasm = 0; // for m, M, n
-	//int alf = 0;// for C, a 
-	//int i;
-	//for (i = 0; i < argc; i++) {
-	//	printf("%s\n", argv[i]);
-	//	if (strcmp(argv[i], "-m")==0) {
-	//		if (rasm == 0) {
-	//			rasm = 1;
-	//			printf("%s\n", argv[i]);
-	//		}
-	//		else if (rasm==1) {
-	//			i++;
-	//		}
-	//		else{
-	//			printf("Опции -m,-M и -n не совместимы вместе\n "); 
-	//		}
-	//	}
-	//	if (strcmp(argv[i], "-M") == 0) {
-	//		if (rasm == 0) {
-	//			rasm = 2;
-	//			printf("%s", argv[i]);
-	//		}
-	//		else if (rasm == 2) {
-	//			i++;
-	//		}
-	//		else {
-	//			printf("Опции -m,-M и -n не совместимы вместе\n ");
-	//		}
-	//	}
-	//	if (strcmp(argv[i], "-n") == 0) {
-	//		if (rasm == 0) {
-	//			rasm = 3;
-	//			printf("%s", argv[i]);
-	//		}
-	//		else if (rasm == 3) {
-	//			i++;
-	//		}
-	//		else {
-	//			printf("Опции -m,-M и -n не совместимы вместе\n ");
-	//		}
-	//	}
-	//	
-	//}
-	//printf("work\n");
+	
 	int f_m = 0, f_M = 0, f_n = 0, f_a = 0, f_C = 0;// флаги 
-	int min = 0, max = 0; 
+	int min = 0, max = 0; // для размера M и m
 	int k = 0, len_buf=0;
 	char buf[LONG];
 	for (int i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-m") == 0) {
+		if (strcmp(argv[i], "-m") == 0) { //Эта функция сравнивает символы двух строк.Нулевое значение говорит о том, что обе строки равны.
 			if (f_m == 0) {
 				f_m = 1;
 				if ((i+1) == argc) {
-					printf("error 0 \n");
+					printf("после m должно быть занчение  \n");
 					exit(1);
 				}
-				min = atoi(argv[i + 1]);// не работает если после м вообще нисчего нет 
+				min = atoi(argv[i + 1]); 
 				printf("-m %d\n", min);
 				if (min == 0) {
-					printf("error 1 \n");
+					printf(" минимальная динна пароля не может быть 0 \n");
 					exit(1);
 				}
 
@@ -81,13 +38,13 @@ int main(int argc, char** argv) {
 			if (f_M == 0) {
 				f_M = 1;
 				if ((i + 1) == argc) {
-					printf("error 0 \n");
+					printf("после M должно быть занчение \n");
 					exit(1);
 				}
-				max = atoi(argv[i + 1]);// не работает если после м вообще ничего нет 
-				printf("-m %d\n", max);
+				max = atoi(argv[i + 1]);
+				printf("-M %d\n", max);
 				if (max == 0) {
-					printf("error 2 \n");
+					printf(" максимальная динна пароля не может быть 0\n");
 					exit(1);
 				}
 
@@ -100,13 +57,13 @@ int main(int argc, char** argv) {
 			if (f_n == 0) {
 				f_n = 1;
 				if ((i + 1) == argc) {
-					printf("error 0 \n");
+					printf("после n должно быть занчение\n");
 					exit(1);
 				}
 				max= min = atoi(argv[i + 1]);// не работает если после м вообще нисчего нет 
 				printf("-n %d\n", max);
 				if (max == 0) {
-					printf("error 3 \n");
+					printf("динна пароля не может быть 0\n");
 					exit(1);
 				}
 
@@ -193,7 +150,7 @@ int main(int argc, char** argv) {
 				C_a = 1;
 			}
 			else{
-				l++;
+				continue;
 			}
 		}
 	    else if (buf[l] == 'A') {
@@ -207,9 +164,10 @@ int main(int argc, char** argv) {
 					//mest++;
 
 				} while (alf[mest] != 'Z');
+				C_A = 1;
 			}
 			else {
-				l++;
+				continue;
 			}
 
 		}
@@ -224,9 +182,10 @@ int main(int argc, char** argv) {
 					//mest++;
 
 				} while (alf[mest] != '9');
+				C_D = 1;
 			}
 			else {
-				l++;
+				continue;
 			}
 
 		}
@@ -235,16 +194,17 @@ int main(int argc, char** argv) {
 				for (int j = 0; j < strlen(sp_sim); j++) {
 					alf[++mest] = sp_sim[j];
 				}
+				C_S = 1;
 			}
 			else {
-				l++;
+				continue;
 			}
 
 		}
 	
 	}
 	alf[mest+1] = '\0';
-	if ((C_a == 0) && (C_A == 0) && (C_D == 0) && (C_S == 0)) {
+	if ((C_a == 0) && (C_A == 0) && (C_D == 0) && (C_S == 0)&&f_C==1) {
 		printf("указывается один или несколько символов из множества {a, A, D, S} \n");
 		exit(1);
 	}
